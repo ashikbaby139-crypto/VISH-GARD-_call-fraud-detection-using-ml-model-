@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VOICE GARD</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            background: linear-gradient(135deg, #1d2671, #c33764);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        .card {
+            background: #ffffff;
+            width: 420px;
+            padding: 45px 40px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            margin: 10px 0;
+            font-size: 26px;
+            color: #222;
+        }
+
+        p {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            margin: 12px 0;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .audio {
+            background: linear-gradient(135deg, #0072ff, #00c6ff);
+        }
+
+        .text {
+            background: linear-gradient(135deg,#0072ff, #00c6ff);
+        }
+
+        .footer {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #aaa;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <div class="icon">🛡️</div>
+    <h2>VOICE GARD</h2>
+    
+
+    <button class="btn audio" onclick="location.href='/audio'">
+         Live Audio 
+    </button>
+
+    <button class="btn text" onclick="location.href='/text'">
+         Text  
+    </button>
+
+    <button class="btn text" onclick="location.href='/logs'">
+     📜 Fraud Log
+
+     <button class="btn text" onclick="location.href='/number'">
+    📞 Phone Number Check
+    
+</button>
+
+
+
+
+    <div class="footer">
+         @ AI + NLP + Speech Processing created by ash limited
+    </div>
+</div>
+
+</body>
+</html>

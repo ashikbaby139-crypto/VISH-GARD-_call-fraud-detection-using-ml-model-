@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fraud Logs</title>
+
+<style>
+body {
+    margin:0;
+    min-height:100vh;
+    font-family:"Segoe UI",Tahoma,sans-serif;
+    background:linear-gradient(135deg,#1d2671,#c33764);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.card {
+    background:white;
+    width:820px;
+    padding:35px;
+    border-radius:16px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.25);
+}
+
+h2 {
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.log {
+    background:#f8f9fa;
+    padding:12px 15px;
+    border-radius:8px;
+    margin-bottom:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-left:5px solid #e74c3c;
+}
+
+.log-text {
+    font-family:Consolas, monospace;
+    font-size:14px;
+    color:#333;
+    white-space:pre-wrap;
+}
+
+.btn-del {
+    background:#e74c3c;
+    color:white;
+    border:none;
+    padding:6px 12px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.btn-del:hover {
+    background:#c0392b;
+}
+
+.controls {
+    display:flex;
+    justify-content:space-between;
+    margin-top:20px;
+}
+
+.clear {
+    background:#2c3e50;
+    color:white;
+    padding:10px 18px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.back {
+    text-decoration:none;
+    color:#555;
+    font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>📜 Fraud Call Logs</h2>
+
+    {% if logs %}
+        {% for log in logs %}
+        <div class="log">
+            <div class="log-text">
+                <strong>🕒 {{ log.time }}</strong><br>
+                {{ log.text }}<br>
+                <small>
+                    Confidence: {{ log.confidence }}% |
+                    Keywords: {{ log.keywords | join(", ") }}
+                </small>
+            </div>
+
+            <button class="btn-del"
+                data-index="{{ loop.index0 }}"
+                onclick="deleteLog(this)">
+                Delete Evidence
+            </button>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p style="text-align:center;color:#777;">
+            No fraud logs found.
+        </p>
+    {% endif %}
+
+    <div class="controls">
+        <button class="clear" onclick="clearLogs()">🗑️ Clear All</button>
+        
+         <button class="back" onclick="location.href='/'">
+         back 
+    </div>
+</div>
+
+<script>
+async function deleteLog(btn){
+    const index = btn.getAttribute("data-index");
+
+    await fetch("/delete_log", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ index: Number(index) })
+    });
+
+    location.reload();
+}
+
+async function clearLogs(){
+    if(!confirm("Clear all logs?")) return;
+
+    await fetch("/clear_logs", { method: "POST" });
+    location.reload();
+}
+</script>
+
+</body>
+</html>

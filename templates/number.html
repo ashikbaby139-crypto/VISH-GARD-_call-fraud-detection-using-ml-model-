@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Phone Number Spam Check</title>
+<style>
+body {
+    font-family:Segoe UI;
+    background:linear-gradient(135deg,#1d2671,#c33764);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.card {
+    background:white;
+    width:420px;
+    padding:35px;
+    border-radius:16px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.25);
+    text-align:center;
+}
+input {
+    width:100%;
+    padding:14px;
+    margin:15px 0;
+    font-size:16px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+button {
+    width:100%;
+    padding:14px;
+    font-size:16px;
+    background:#0072ff;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+.result {
+    margin-top:20px;
+    font-weight:bold;
+}
+ul {
+    text-align:left;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>📞 Phone Number Check</h2>
+
+    <input id="number" placeholder="Enter phone number">
+    <button onclick="check()">Check Number</button>
+
+    <div class="result" id="status"></div>
+    <div id="confidence"></div>
+    <ul id="reasons"></ul>
+
+    <br>
+    <button class="back" onclick="location.href='/'">
+         back
+</div>
+
+<script>
+async function check(){
+    const number = document.getElementById("number").value;
+
+    const res = await fetch("/check_number", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body:JSON.stringify({ number })
+    });
+
+    const data = await res.json();
+
+    document.getElementById("status").innerText = data.status;
+    document.getElementById("confidence").innerText =
+        "Confidence: " + data.confidence + "%";
+
+    const ul = document.getElementById("reasons");
+    ul.innerHTML = "";
+    data.reasons.forEach(r=>{
+        const li=document.createElement("li");
+        li.innerText=r;
+        ul.appendChild(li);
+    });
+}
+</script>
+
+</body>
+</html>
